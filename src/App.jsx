@@ -1,36 +1,12 @@
 import './App.css'
 import TodoList from './components/TodoList'
 import TodoCreate from './components/TodoCreate'
-import { useState } from 'react'
+import { useContext } from 'react'
+import TodoContext from './context/todo'
 
 function App() {
-  const [todos, setTodos] = useState([]);
-
-  function createTodo(title) {
-    const newTodo = {
-      id: crypto.randomUUID(),
-      title: title,
-      completed: false,
-    }
-    const updatedTodos = [...todos, newTodo]
-    setTodos(updatedTodos)
-  }
-
-  function removeTodo(id) {
-    const updatedTodos = todos.filter((todo) => todo.id !== id)
-    setTodos(updatedTodos)
-  }
-
-  function changeTodo(id, title, completed = false) {
-    const updatedTodos = todos.map((todo) => {
-      if (todo.id === id) {
-        return {...todo, title, completed}
-      }
-      return todo
-    })
-
-    setTodos(updatedTodos)
-  }
+  const { todos } = useContext(TodoContext)
+  const { createTodo, removeTodo, changeTodo } = useContext(TodoContext)
 
   return (
     <main className='main'>
